@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding-top: 50px;
+    }
+    
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .password-strength {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    
+    .poor {
+      color: red;
+    }
+    
+    .good {
+      color: orange;
+    }
+    
+    .strong {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form>
+      <input type="text" id="name" placeholder="Name" required>
+      <input type="text" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <div class="password-strength" id="password-strength"></div>
+      <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+  
+  <script>
+    var passwordInput = document.getElementById('password');
+    var passwordStrength = document.getElementById('password-strength');
+    
+    passwordInput.addEventListener('input', function () {
+      var password = passwordInput.value;
+      var strength = checkPasswordStrength(password);
+      
+      if (strength === 'poor') {
+        passwordStrength.textContent = 'Password Strength: Poor';
+        passwordStrength.className = 'password-strength poor';
+      } else if (strength === 'good') {
+        passwordStrength.textContent = 'Password Strength: Good';
+        passwordStrength.className = 'password-strength good';
+      } else if (strength === 'strong') {
+        passwordStrength.textContent = 'Password Strength: Strong';
+        passwordStrength.className = 'password-strength strong';
+      } else {
+        passwordStrength.textContent = '';
+        passwordStrength.className = 'password-strength';
+      }
+    });
+    
+    function checkPasswordStrength(password) {
+      var strength = 0;
+      
+      if (password.length >= 8) {
+        strength++;
+      }
+      
+      if (/[A-Z]/.test(password)) {
+        strength++;
+      }
+      
+      if (/[a-z]/.test(password)) {
+        strength++;
+      }
+      
+      if (/\d/.test(password)) {
+        strength++;
+      }
+      
+      if (/\W/.test(password)) {
+        strength++;
+      }
+      
+      if (strength === 1) {
+        return 'poor';
+      } else if (strength === 2 || strength === 3) {
+        return 'good';
+      } else if (strength >= 4) {
+        return 'strong';
+      } else {
+        return '';
+      }
+    }
+  </script>
+</body>
+</html>
